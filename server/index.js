@@ -22,25 +22,6 @@ const dbConfig = {
 // Create a connection pool
 const pool = mysql.createPool(dbConfig);
 
-// Test the database connection
-async function testConnection() {
-  try {
-    const connection = await pool.getConnection();
-    connection.release();
-    console.log('Database connection successful!');
-  } catch (error) {
-    console.error('Database connection failed:', error);
-  }
-}
-
-// Initialize database
-async function init() {
-  await testConnection();
-  await createTable();
-}
-
-// init().catch(console.error);
-
 // API endpoints
 app.get('/api/aircraft', async (req, res) => {
   try {
@@ -100,27 +81,16 @@ app.delete('/api/aircraft/:id', async (req, res) => {
   }
 });
 
+app.get('/health', async (req, res) => {
+  try {
+    console.log("health endpoint pinged!!!")
+    res.status(200).send('Health status OK!');
+  } catch (error) {
+    console.error('Error in health endpoint:', error);
+    res.status(500).send('Error at health endpoint');
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
-
-// Create the aircraft_logs table if it doesn't exist
-async function createTable() {
-  try {
-    const connection = await pool.getConnection();
-    await connection.query(`
-      CREATE TABLE IF NOT EXISTS aircraft_logs (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        registration VARCHAR(255) NOT NULL,
-        type VARCHAR(255),
-        location VARCHAR(255)
-      )
-    `);
-    connection.release();
-    console.log('Table aircraft_logs created or already exists.');
-  } catch (error) {
-    console.error('Error creating table:', error);
-  }
-}
-
-// createTable();

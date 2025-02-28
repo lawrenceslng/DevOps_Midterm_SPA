@@ -15,7 +15,6 @@ services:
       - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
       - ./data:/var/lib/mysql
   backend:
-    image: server
     build:
       context: server
       dockerfile: ./Dockerfile
@@ -26,7 +25,6 @@ services:
     depends_on: 
       - db
   frontend:
-    image: client
     build:
       context: client
       dockerfile: ./Dockerfile
