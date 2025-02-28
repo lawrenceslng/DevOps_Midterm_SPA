@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.8'
 
 services:
   db:
@@ -10,30 +10,45 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - sameNetworkAsMysql # Connects the service to the 'sameNetworkAsMysql' network
+      - app-network
     volumes:
       - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
       - ./data:/var/lib/mysql
+
   backend:
     build:
       context: server
       dockerfile: ./Dockerfile
+      target: development
     ports:
       - 3001:3001
     networks:
-      - sameNetworkAsMysql # Connects the service to the 'sameNetworkAsMysql' network
-    depends_on: 
+      - app-network
+    depends_on:
       - db
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    
   frontend:
     build:
       context: client
       dockerfile: ./Dockerfile
+      target: development
     ports:
       - 3000:3000
     networks:
-      - sameNetworkAsMysql # Connects the service to the 'sameNetworkAsMysql' network
+      - app-network
     depends_on:
       - backend
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+
 networks:
-  sameNetworkAsMysql: # Defines the 'sameNetworkAsMysql' network
-    driver: bridge # Specifies the network driver as 'bridge'
+  app-network:
+    driver: bridge
