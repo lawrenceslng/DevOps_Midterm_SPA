@@ -4,9 +4,6 @@ services:
   db:
     image: mysql:8.0
     command: --init-file /docker-entrypoint-initdb.d/setup.sql
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
       - "3306:3306"
     networks:
