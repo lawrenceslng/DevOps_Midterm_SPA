@@ -10,21 +10,9 @@ EXPOSE 3000
 
 CMD ["npm", "run", "dev"]
 
-FROM node:20-alpine as production
-
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN npm install --production
-
-COPY . .
-
-RUN npm run build
-
 FROM nginx:alpine as nginx
 
-COPY --from=production /app/build /usr/share/nginx/html
+COPY --from=production ./build /usr/share/nginx/html
 
 EXPOSE 80
 
