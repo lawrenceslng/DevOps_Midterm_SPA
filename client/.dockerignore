@@ -1,0 +1,27 @@
+# Node modules (dependencies should be installed inside the container)
+node_modules
+
+# Build folder (React build output will be generated within the container itself)
+build
+
+# Logs and other temporary files
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# OS generated files (macOS, Windows)
+.DS_Store
+Thumbs.db
+
+# Git-related files (avoid sending .git config to the Docker image)
+.git
+.gitignore
+
+# Environment files (do not copy sensitive data)
+.env
+.env.local
+.env.*.local
+
+# Docker-related files if specific to your development environment
+.docker
+docker-compose.yml

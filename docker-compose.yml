@@ -4,6 +4,8 @@ services:
   db:
     image: mysql:8.0
     command: --init-file /docker-entrypoint-initdb.d/setup.sql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - "3306:3306"
     networks:

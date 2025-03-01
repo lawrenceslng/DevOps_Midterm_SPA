@@ -81,7 +81,7 @@ app.delete('/api/aircraft/:id', async (req, res) => {
   }
 });
 
-app.get('/health', async (req, res) => {
+app.get('/api/health', async (req, res) => {
   try {
     console.log("health endpoint pinged!!!")
     res.status(200).send('Health status OK!!');
