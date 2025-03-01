@@ -12,7 +12,7 @@ CMD ["npm", "run", "dev"]
 
 FROM nginx:alpine as nginx
 
-COPY --from=production ./build /usr/share/nginx/html
+COPY ./build /usr/share/nginx/html
 
 EXPOSE 80
 
