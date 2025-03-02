@@ -84,7 +84,7 @@ app.delete('/api/aircraft/:id', async (req, res) => {
 app.get('/api/health', async (req, res) => {
   try {
     console.log("health endpoint pinged!!!")
-    res.status(200).send('Health status OK!!asdf');
+    res.status(200).send('Health status OK!!');
   } catch (error) {
     console.error('Error in health endpoint:', error);
     res.status(500).send('Error at health endpoint');
