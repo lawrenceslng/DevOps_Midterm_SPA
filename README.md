@@ -1,32 +1,62 @@
-# DevOps_Midterm_SPA
+# Aircraft Spotter Application (Source Code)
 
-## Steps for QA-EC2
+This repository contains the source code for the Aircraft Spotter application, a full-stack web application built with React and Express.js. The infrastructure code for deployment is maintained separately in [DevOps_Midterm_Infra](https://github.com/lawrenceslng/DevOps_Midterm_Infra) to ensure proper separation of concerns.
 
-1. Use EC2 console to setup basics
-2. Create RDS and connect it 
-3. install mysql client in ec2 (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/mysql-install-cli.html)
-4. connect to mysql
-mysql -h midterm-db.c7etq1pbw4s4.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
-5. run through setup.sql to set up db
+## Repository Structure
 
-## Route 53 work
+```
+.
+├── client/                 # React frontend
+│   ├── Dockerfile         # Frontend container configuration
+│   ├── public/           
+│   └── src/              
+├── server/                # Express.js backend
+│   ├── Dockerfile        # Backend container configuration
+│   └── index.js          # Server entry point
+├── docker-compose.yml     # Local development orchestration
+└── setup.sql             # Database initialization
+```
 
-https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/migrate-dns-domain-in-use.html#migrate-dns-get-zone-file
-1. create hosted zone
+## Tech Stack
 
-## Nginx Config
-[ec2-user@ip-10-0-3-85 ~]$ mkdir /etc/nginx/sites-available
-mkdir: cannot create directory ‘/etc/nginx/sites-available’: Permission denied
-[ec2-user@ip-10-0-3-85 ~]$ sudo mkdir /etc/nginx/sites-available
-[ec2-user@ip-10-0-3-85 ~]$ sudo vim /etc/nginx/sites-available/app
-[ec2-user@ip-10-0-3-85 ~]$ sudo mkdir /etc/nginx/sites-enabled/
-[ec2-user@ip-10-0-3-85 ~]$ sudo ln -s /etc/nginx/sites-available/app /etc/nginx/sites-enabled/
-[ec2-user@ip-10-0-3-85 ~]$ sudo nginx -t
-nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-nginx: configuration file /etc/nginx/nginx.conf test is successful
-[ec2-user@ip-10-0-3-85 ~]$ sudo systemctl restart nginx
+### Frontend
+- React 18
+- Material UI (MUI) for component library
+- React Scripts for development and build tooling
 
-## TO DO
+### Backend
+- Express.js
+- MySQL database (via mysql2)
+- CORS enabled for development
+- Environment configuration via dotenv
 
-1. set up nginx on QA EC2 and run a simple app
-2. 
+## Local Development
+
+The application is containerized using Docker for consistent development environments. To run locally:
+
+1. Ensure Docker and Docker Compose are installed on your system
+2. Clone this repository
+3. Start the application:
+   ```bash
+   docker-compose up
+   ```
+
+This will start:
+- Frontend container (React development server)
+- Backend container (Express.js with Nodemon for hot reloading)
+- MySQL database container
+
+The frontend will be available at `http://localhost:3000` and the backend at `http://localhost:3001`.
+
+## Infrastructure
+
+The infrastructure code for deploying this application is maintained in a separate repository at [DevOps_Midterm_Infra](https://github.com/lawrenceslng/DevOps_Midterm_Infra). This separation ensures:
+
+- Clear distinction between application code and infrastructure
+- Independent versioning of infrastructure changes
+- Easier management of different deployment environments
+- Better security through separation of concerns
+
+The infrastructure repository handles:
+- Nightly deployment automation
+- CI/CD pipeline setup
