@@ -108,7 +108,7 @@ function App() {
       <Container maxWidth="md">
         <Box sx={{ py: 4 }}>
           <Typography variant="h1" component="h1" gutterBottom align="center">
-            Aircraft Spotter
+            Aircraft SpotterASADASDA
           </Typography>
           <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
             <form onSubmit={handleSubmit}>
